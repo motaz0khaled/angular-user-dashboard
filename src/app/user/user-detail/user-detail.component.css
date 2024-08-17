@@ -1,0 +1,30 @@
+// user-details.component.ts
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { UserService } from './services/user.service';
+import { User } from './models/user.model';
+
+@Component({
+  selector: 'app-user-details',
+  templateUrl: './user-details.component.html',
+  styleUrls: ['./user-details.component.css']
+})
+export class UserDetailsComponent implements OnInit {
+  user$: Observable<User>;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private userService: UserService
+  ) {}
+
+  ngOnInit() {
+    const userId = +this.route.snapshot.paramMap.get('id');
+    this.user$ = this.userService.getUserDetails(userId);
+  }
+
+  goBack() {
+    this.router.navigate(['/']);
+  }
+}

@@ -1,0 +1,20 @@
+// app.component.html
+<header>
+  <div class="search-container">
+    <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="Search by ID" />
+  </div>
+</header>
+
+<div class="users-container">
+  <div class="user-card" *ngFor="let user of (users$ | async)" (click)="viewUserDetails(user.id)">
+    <img [src]="user.avatar" alt="{{ user.firstName }} {{ user.lastName }}" />
+    <h3>{{ user.firstName }} {{ user.lastName }}</h3>
+    <p>ID: {{ user.id }}</p>
+  </div>
+</div>
+
+<div class="pagination">
+  <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+  <span>Page {{ currentPage }}</span>
+  <button (click)="onPageChange(currentPage + 1)">Next</button>
+</div>
